@@ -2,9 +2,12 @@ package com.anshul.springdemo.mvc;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.propertyeditors.StringTrimmerEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -34,4 +37,19 @@ public class CustomerController {
 		
 	}
 	
+	//add an initbinder ... to convert trim input strings
+	// remove leading and trailing whitespace
+	// To pre-process all web requests coming into our Controller
+	@InitBinder
+	public void initBinder(WebDataBinder dataBinder) {
+		
+		// Create StringTrimmerEditor object to remove whitespaces - leading and trailing
+		// value given as 'true' - mean trim it to null if the entry is entirely whitespaces
+		StringTrimmerEditor stringTrimmerEditor = new StringTrimmerEditor(true);
+		
+		// Customer editor used to apply StringTrimmerEditor to all Strings
+		dataBinder.registerCustomEditor(String.class, stringTrimmerEditor);
+		
+	}
+
 }
