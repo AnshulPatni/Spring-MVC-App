@@ -16,7 +16,15 @@ public class CourseCodeContraintValidator
 	@Override
 	public boolean isValid(String theCode,
 				ConstraintValidatorContext theConstraintValidatorContext) {
-		boolean result = theCode.startsWith(coursePrefix);
+		
+		boolean result;
+		
+		if(theCode != null) {
+			result = theCode.startsWith(coursePrefix);
+		} else {
+			result = true;
+		}
+		
 		return result;
 	}
 	
